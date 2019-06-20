@@ -10,12 +10,6 @@ void BMHSParalelo(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao
     int i;
 	pthread_t THREADS[NTHREADS];
 	thread_arg argument[NTHREADS];
-//     for(int j=0; j < NTHREADS; j++){
-//     for (i = 0; i <= MAXCHAR; i++)
-//       argument[j].d[i] = tamanhoPadrao + 1;
-//     for (i = 1; i <= tamanhoPadrao; i++)
-//       argument[j].d[padrao[i-1]] = tamanhoPadrao - i + 1;
-// }
 
 	for(i = 0; i < NTHREADS; i++){
     if(i != 0)
@@ -34,9 +28,13 @@ void BMHSParalelo(char *texto, int tamanhoTexto, char *padrao, int tamanhoPadrao
     strcpy(argument[i].padrao,padrao);
 		pthread_create(&(THREADS[i]), NULL,func, &(argument[i]));
 	}
-  // printf("\n %s ",argument->texto);
+
 	for(i = 0; i < NTHREADS; i++){
 		pthread_join(THREADS[i],NULL);
+	}
+  
+  for(i = 0; i < NTHREADS; i++){
+    liberaStrings(argument[i].padrao,argument[i].texto);
 	}
 
 }
